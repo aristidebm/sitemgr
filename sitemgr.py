@@ -1,7 +1,9 @@
-from cli.src.database.model import Site, Base
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import create_engine
+from main.src.ui.commands import site_manager
+
+
+def main():
+    site_manager()
 
 
 if __name__ == "__main__":
-    pass
+    main()
