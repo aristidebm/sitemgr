@@ -1,4 +1,5 @@
 from main.src.ui.commands import site_manager
+from main import config
 
 
 def main():
