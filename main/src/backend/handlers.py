@@ -37,5 +37,17 @@ def rm_handler(tag):
         click.echo(e)
 
 
-def update_handler():
-    pass
+def update_handler(tag: Tag, description: str, url: Url, date: DateTime, new_tag: Tag):
+    try:
+        site_f = session.query(Site).filter_by(tag=tag).first()
+        if not site_f:
+            raise TagNotFoundError()
+        else:
+            site = Site(tag=new_tag, desc=description, url=url, date=date)
+            try:
+                site_f.update(site)
+                session.commit()
+            except IntegrityError:
+                raise TakenTagError()
+    except SQLAlchemyError as e:
+        click.echo(e)

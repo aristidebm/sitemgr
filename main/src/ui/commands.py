@@ -1,7 +1,7 @@
 import click
 
 from main.src.backend.exceptions import TakenTagError, TagNotFoundError
-from main.src.backend.handlers import add_handler, rm_handler
+from main.src.backend.handlers import add_handler, rm_handler, update_handler
 from main.src.ui.types import Url, Tag, DateTime
 from main.src.backend.callbacks import rm_all, list_all, list_tags, pretty
 
@@ -97,6 +97,12 @@ def rm(tag):
 @click.option("--new-tag", "-t", help=" Add an updated tag of the site.", type=Tag)
 @click.option("--url", "-u", help="Add an updated site url.", type=Url)
 @click.argument("tag", type=Tag)
-def update():
+def update(tag, new_tag, url, description, date):
     """Update a site."""
-    pass
+    try:
+        update_handler(tag, description, url, date, new_tag)
+        click.echo(click.style("Updated Successfully!", fg="green"))
+    except TakenTagError as e:
+        click.echo(e.message)
+    except TagNotFoundError as e:
+        click.echo(e.message)
