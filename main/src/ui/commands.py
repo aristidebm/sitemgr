@@ -3,6 +3,7 @@ import click
 from main.src.backend.exceptions import TakenTagError, TagNotFoundError
 from main.src.backend.handlers import add_handler, rm_handler
 from main.src.ui.types import Url, Tag, DateTime
+from main.src.backend.callbacks import rm_all, list_all, list_tags, pretty
 
 
 @click.group()
@@ -14,7 +15,7 @@ from main.src.ui.types import Url, Tag, DateTime
     is_eager=True,
     expose_value=False,
     help="List all available sites.",
-    # callback=
+    callback=list_all,
 )
 @click.option(
     "--pretty",
@@ -23,8 +24,8 @@ from main.src.ui.types import Url, Tag, DateTime
     is_eager=True,
     expose_value=False,
     help="Beautify the output.",
+    callback=pretty,
 )
-# callback=pretty,)
 @click.option(
     "--tags",
     "-t",
@@ -32,19 +33,11 @@ from main.src.ui.types import Url, Tag, DateTime
     is_eager=True,
     expose_value=False,
     help="List site's tag only.",
-    # callback=list_tags,)
+    callback=list_tags,
 )
-@click.option(
-    "--version",
-    "-v",
-    is_flag=True,
-    is_eager=True,
-    expose_value=False,
-    help="Show the version.",
-    # callaback=print_version,
-)
+@click.version_option(version="1.0.0")
 def site_manager():
-    """A Ligthweight in-console bookmarking tool for a standalone use."""
+    """A Lightweight in-console bookmarking tool for a personal use."""
     pass
 
 
@@ -63,6 +56,7 @@ def add(tag, description, date, url):
     """Add  a new site."""
     try:
         add_handler(tag, description, url, date)
+        click.echo(click.style("Successfully added!", fg="green"))
     except TakenTagError as e:
         click.echo(f"{e.message}")
 
@@ -75,15 +69,16 @@ def add(tag, description, date, url):
     is_eager=True,
     expose_value=False,
     help="Delete all available sites.",
-    # callback =
+    callback=rm_all,
 )
 @click.help_option("--help", "-h")
 @click.argument("tag", type=Tag)
 def rm(tag):
     """Remove a site."""
-    click.confirm("Do want to continue deleting the site ?", abort=True)
+    click.confirm("Are you sure you want to delete this site ?", abort=True)
     try:
         rm_handler(tag)
+        click.echo(click.style("Deleted Successfully!", fg="red"))
     except TagNotFoundError as e:
         click.echo(f"{e.message}")
 
