@@ -10,7 +10,7 @@ line boockmark functionalities. It offers the following  features
 #### Installation
 To install sitemgr follow above instructions
 ```jsunicoderegexp
-pip install -r requierements.txt
+pip install -r requirements.txt
 ``` 
 
 #### Usage
