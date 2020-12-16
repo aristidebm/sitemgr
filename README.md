@@ -1,8 +1,9 @@
 #### What is sitemgr ?
 sitemgr stands for site manager. sitemgr offers very simple command
-line boockmark functionalities. It offers the following  features
-+ add a site to bookmarking.
-+ remove site from bookmarking.
+line bookmark functionalities. It offers the following features:
+
++ add a site to a bookmark list.
++ remove site from a bookmark list.
 + update a site.
 + list all site. 
 + tag renaming.
@@ -10,7 +11,11 @@ line boockmark functionalities. It offers the following  features
 #### Installation
 To install sitemgr follow above instructions
 ```jsunicoderegexp
-pip install -r requierements.txt
+git clone https://github.com/Godmind-BM/sitemgr.git
+pip install virtualenv
+virtualenv venv -p python3.6
+source venv/bin/activate
+pip install -r requirements.txt
 ``` 
 
 #### Usage
